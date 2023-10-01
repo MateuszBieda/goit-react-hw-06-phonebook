@@ -17,11 +17,11 @@ export const Form = () => {
       number: e.currentTarget.elements.number.value
     };
 
-    const isExist = contacts.find(
+    const nameExist = contacts.find(
       ({ name }) => name.toLowerCase() === contact.name.toLowerCase()
     );
 
-    if (isExist) {
+    if (nameExist) {
       return toast.warn(`${contact.name} is already in contacts.`);
     }
     dispatch(addContact(contact));
