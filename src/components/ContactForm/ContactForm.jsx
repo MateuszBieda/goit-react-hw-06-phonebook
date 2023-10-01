@@ -1,43 +1,53 @@
-import { useDispatch } from 'react-redux';
-import { addContact } from 'redux/actions';
-import css from './ContactForm.module.css';
+import css from "./ContactForm.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { addContact } from "../../redux/contactsSlice";
+import { getContacts } from "../../redux/selectors";
+import { nanoid } from "nanoid";
+import { toast } from "react-toastify";
 
 export const Form = () => {
   const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
 
-
-
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const form = e.target;
-    dispatch(addContact(form.elements.text.value))
-    form.reset();
-    
+    const contact = {
+      id: nanoid(),
+      name: e.currentTarget.elements.name.value,
+      number: e.currentTarget.elements.number.value
+    };
+
+    const isExist = contacts.find(
+      ({ name }) => name.toLowerCase() === contact.name.toLowerCase()
+    );
+
+    if (isExist) {
+      return toast.warn(`${contact.name} is already in contacts.`);
+    }
+    dispatch(addContact(contact));
+    e.currentTarget.reset();
   };
 
   return (
-    <form onSubmit={handleSubmit} className={css.form}>
+    <form className={css.form} onSubmit={handleSubmit}>
       <label>
         <p className={css.paragraph}>Name</p>
         <input
           className={css.input}
-          id="name"
+          id={nanoid()}
           type="text"
           name="name"
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
-
         />
       </label>
       <label>
         <p className={css.paragraph}>Number</p>
         <input
           className={css.input}
-          id="number"
+          id={nanoid()}
           type="tel"
           name="number"
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
         />
