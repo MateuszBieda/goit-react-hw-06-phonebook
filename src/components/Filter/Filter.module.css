@@ -8,14 +8,18 @@
   .paragraph_filter {
     font-weight: 500;
     font-size: 18px;
-    margin-left: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    
   }
   
   .input_filter{
-      width: 120px;
-      margin-left: 25px;
+      width: 180px;
+      height: 28px;
+      margin-left: auto;
+      margin-right:auto;
       border: 1px solid green;
-      margin-bottom: 20px;
+      margin-bottom: 40px;
   }
   
     .input_filter:hover {

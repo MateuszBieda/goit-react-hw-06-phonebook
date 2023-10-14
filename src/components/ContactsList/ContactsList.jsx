@@ -26,7 +26,7 @@ export const ContactsList = () => {
         <li className={css.list_item} key={id}>
           <p>
             {name} <span> </span>
-            {number}
+            {number }
           </p>
           <button
             className={css.button_delete}
